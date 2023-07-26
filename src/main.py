@@ -1,12 +1,13 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 import openai
 import requests
 
 
 app = Flask(__name__)
+api_key = 'API_KEY'
 
 # FORMULARIO --> RESPUESTA
-def api_chatgpt(api_key, genero, edad, peso, agua, enfermedad, medicacion, actividad, sol):
+def api_chatgpt(genero, edad, peso, agua, enfermedad, medicacion, actividad, sol):
     try:
         openai.api_key = api_key
         prompt = f"Soy de género {genero}." \
@@ -32,7 +33,15 @@ def api_chatgpt(api_key, genero, edad, peso, agua, enfermedad, medicacion, activ
 
 @app.route('/chatgpt', methods=['GET'])
 def chatgpt():
-    respuesta = api_chatgpt()
+    genero = request.args.get('genero')
+    edad = request.args.get('edad')
+    peso = request.args.get('peso')
+    agua = request.args.get('agua')
+    enfermedad = request.args.get('enfermedad')
+    medicacion = request.args.get('medicacion')
+    actividad = request.args.get('actividad')
+    sol = request.args.get('sol')
+    respuesta = api_chatgpt(genero, edad, peso, agua, enfermedad, medicacion, actividad, sol)
     return jsonify(respuesta)
 
 # LOCALIZACION --> TEMPERATURA
@@ -48,6 +57,7 @@ def api_openweather(ciudad):
     
 @app.route('/openweather', methods=['GET'])
 def openweather():
+    ciudad = request.args.get('ciudad')
     temperatura = api_openweather()
     return jsonify(temperatura)
 
