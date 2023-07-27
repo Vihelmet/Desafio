@@ -2,7 +2,7 @@ import os
 import pickle
 
 
-from flask import Flask, request, jsonify, make_response
+from flask import Flask, request, jsonify
 from dotenv import load_dotenv
 
 from utils.utils import api_openweather, api_chatgpt
@@ -12,8 +12,8 @@ load_dotenv()
 app = Flask(__name__)
 
 # Cargamos el modelo desde el archivo .pkl
-with open('../models/modelo_tree.pkl', 'rb') as archivo_entrada:
-    modelo_entrenado = pickle.load(archivo_entrada)
+#with open('../models/modelo_tree.pkl', 'rb') as archivo_entrada:
+#    modelo_entrenado = pickle.load(archivo_entrada)
 
 @app.route("/predict", methods=["POST"])
 def predict():
@@ -44,27 +44,48 @@ def predict():
 
 @app.route('/chatgpt', methods=['GET'])
 def chatgpt():
-    genero = request.args.get('genero')
-    edad = request.args.get('edad')
-    peso = request.args.get('peso')
-    agua = request.args.get('agua')
-    enfermedad = request.args.get('enfermedad')
-    medicacion = request.args.get('medicacion')
-    actividad = request.args.get('actividad')
-    sol = request.args.get('sol')
-    respuesta = api_chatgpt(genero, edad, peso, agua, enfermedad, medicacion, actividad, sol)
-    return jsonify(respuesta)
+    try:
+        data = {}
+        data["genero"] = request.args.get('genero')
+        data["edad"] = request.args.get('edad')
+        data["peso"] = request.args.get('peso')
+        data["agua"] = request.args.get('agua')
+        data["enfermedad"] = request.args.get('enfermedad')
+        data["medicacion"] = request.args.get('medicacion')
+        data["actividad"] = request.args.get('actividad')
+        data["sol"] = request.args.get('sol')
+        
+        respuesta = api_chatgpt(data)
+        return jsonify(respuesta)
+    except Exception as err:
+        # If any exception occurs during the execution, return a JSON response 
+        # indicating an Internal Server Error (status code 500)
+        return jsonify({"error": "Internal Server Error", "status_code": 500})
 
     
 @app.route('/openweather', methods=['GET'])
 def openweather():
     try:
-        lat = request.args.get('lat')
-        lon = request.args.get('lon')
+        lat = request.args.get('lat')  # Latitude (e.g., 51.5156177)
+        lon = request.args.get('lon')  # Longitude (e.g., -0.0919983)
+
+        # Return a JSON response indicating a Bad Request (status code 400) 
+        # if latitude or longitude is missing
+        if not lat or not lon:
+            return jsonify({"error": "Bad Request", "status_code": 400})
+
+        # Call the function api_openweather() to get the temperature data for the given 
+        # latitude and longitude
         temperatura = api_openweather(lat, lon)
+
+        # Return a JSON response with the temperature data
         return jsonify(temperatura)
+
     except Exception as err:
-        return make_response(err, 500)
+        # If any exception occurs during the execution, return a JSON response indicating 
+        # an Internal Server Error (status code 500)
+        return jsonify({"error": "Internal Server Error", "status_code": 500})
+
 
 
 if __name__ == '__main__':
