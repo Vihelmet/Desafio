@@ -5,6 +5,7 @@ import requests
 
 app = Flask(__name__)
 api_key = 'API_KEY'
+ow_key = 'API_KEY'
 
 # FORMULARIO --> RESPUESTA
 def api_chatgpt(nombre, genero, edad, altura, peso, agua, actividad, enfermedad):
@@ -39,24 +40,25 @@ def chatgpt():
     agua = request.args.get('agua')
     actividad = request.args.get('actividad')
     enfermedad = request.args.get('enfermedad')
-    respuesta = api_chatgpt(nombre, genero, edad, altura, peso, agua, enfermedad, actividad)
+    respuesta = api_chatgpt(nombre, genero, edad, altura, peso, agua, actividad, enfermedad)
     return jsonify(respuesta)
 
 # LOCALIZACION --> TEMPERATURA
-def api_openweather(ciudad):
+def api_openweather(lat, lon):
     try:
-        url = "https://api.openweathermap.org/data/2.5/weather?q={}&appid=bb3d32afaf3faac9ed88f681a557f98d&units=metric".format(ciudad)
+        url = f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={ow_key}&units=metric"
         res = requests.get(url)
         data = res.json()
         temp = data['main']['temp']
-        return f'{ciudad}: {temp}°'
+        return f"{temp}°"
     except Exception as e:
-        return "MADRID: 30°"
+        return "30°"
     
 @app.route('/openweather', methods=['GET'])
 def openweather():
-    ciudad = request.args.get('ciudad')
-    temperatura = api_openweather()
+    lat = request.args.get('lat')
+    lon = request.args.get('lon')
+    temperatura = api_openweather(lat, lon)
     return jsonify(temperatura)
 
 

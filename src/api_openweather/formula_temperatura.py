@@ -1,11 +1,11 @@
 import requests
 
 
-def temperatura(ciudad):
+def temperatura(lat, lon, api_key):
     
     try:
 
-        url = "https://api.openweathermap.org/data/2.5/weather?q={}&appid=bb3d32afaf3faac9ed88f681a557f98d&units=metric".format(ciudad)
+        url = f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={api_key}&units=metric"
 
         res = requests.get(url)
 
@@ -13,8 +13,8 @@ def temperatura(ciudad):
 
         temp = data['main']['temp']
 
-        return print(temp)
+        return print(f"{temp}°")
     
     except Exception as e:
 
-        return print(f"ERROR {e}")
+        return print("30°")
