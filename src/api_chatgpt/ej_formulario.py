@@ -1,8 +1,8 @@
+nombre = 'Antonia'
 genero = 'mujer'
-edad = 6
-peso = 26
+edad = 86
+altura = 165
+peso = 65
 agua = 'a menudo'
-enfermedad = 'no'
-medicacion = 'si'
-actividad = 'a menudo'
-sol = 'a menudo'
+actividad = 'nada'
+enfermedad = 'cardiovascular'

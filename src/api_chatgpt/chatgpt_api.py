@@ -1,6 +1,6 @@
 from chatgpt_api_key import api_key
-from ej_formulario import genero, edad, peso, agua, enfermedad, medicacion, actividad, sol
-from formula_golpe_calor import golpe_calor
+from ej_formulario import nombre, genero, altura, edad, peso, agua, actividad, enfermedad
+from formula_golpe_calor import api_chatgpt
 
 
-golpe_calor(api_key, genero, edad, peso, agua, enfermedad, medicacion, actividad, sol)
+api_chatgpt(api_key, nombre, genero, edad, altura, peso, agua, actividad, enfermedad)
