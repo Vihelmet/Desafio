@@ -1,11 +1,15 @@
 from flask import Flask, jsonify, request
 import openai
 import requests
+from dotenv import load_dotenv
+import os
 
 
 app = Flask(__name__)
-api_key = 'API_KEY'
-ow_key = 'API_KEY'
+
+load_dotenv()
+api_key = os.getenv('API_KEY')
+ow_key = os.getenv('OW_KEY')
 
 # FORMULARIO --> RESPUESTA
 def api_chatgpt(nombre, genero, edad, altura, peso, agua, actividad, enfermedad):
