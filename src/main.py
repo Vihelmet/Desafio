@@ -41,7 +41,7 @@ def chatgpt():
             answer = api_chatgpt(data["question"])
         else:
             # If the 'question' field is not present in the JSON payload, return a Bad Request JSON response
-            return jsonify({"error": "Bad Request", "status_code": 400})
+            return jsonify({"error": "Bad Request"}), 400 # , "status_code": 400
 
         # Check if the 'user_id' field is present in the JSON payload
         if "user_id" in data:
@@ -53,7 +53,7 @@ def chatgpt():
 
     except Exception as err:
         # If any exception occurs during the execution, return a JSON response indicating an Internal Server Error (status code 500)
-        return jsonify({"error": "Internal Server Error", "status_code": 500})
+        return jsonify({"error": err}), 500 # "Internal Server Error" , "status_code": 500
 
 
     
