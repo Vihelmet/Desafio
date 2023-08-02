@@ -33,23 +33,8 @@ def chatgpt():
     response indicating an Internal Server Error (status code 500).
     """
     try:
-        data = request.json  #get_json()
-
-        # Check if the JSON payload contains a 'question' field
-        if "question" in data:
-            # Call the 'api_chatgpt()' function to obtain the chatbot's answer to the user's question
-            answer = api_chatgpt(data["question"])
-        else:
-            # If the 'question' field is not present in the JSON payload, return a Bad Request JSON response
-            return jsonify({"error": "Bad Request !!TETO!!"}), 400 # , "status_code": 400
-
-        # Check if the 'user_id' field is present in the JSON payload
-        if "user_id" in data:
-            # Save the chatbot's answer to the database for the corresponding user
-            save_answer(data["user_id"], answer)
-
         # Return a JSON response containing the chatbot's answer
-        return jsonify(answer)
+        return jsonify({"answer": "Gracias por rellenar el formulario. Parece que estamos teniendo problemas técnicos. Vuelva a intentarlo más tarde, por favor."})
 
     except Exception as err:
         # If any exception occurs during the execution, return a JSON response indicating an Internal Server Error (status code 500)
