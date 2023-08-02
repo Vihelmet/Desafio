@@ -33,7 +33,7 @@ def chatgpt():
     response indicating an Internal Server Error (status code 500).
     """
     try:
-        data = request.get_json()
+        data = request.json  #get_json()
 
         # Check if the JSON payload contains a 'question' field
         if "question" in data:
