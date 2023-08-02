@@ -83,5 +83,5 @@ def api_chatgpt(prompt: str) -> str:
 
     except Exception as err:
         # If any exception occurs during the execution, raise an exception with the error message
-        raise Exception(f"ERROR {err}")
+        raise Exception(f"ERROR_PUTO {err}")
 
