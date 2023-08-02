@@ -53,7 +53,7 @@ def chatgpt():
 
     except Exception as err:
         # If any exception occurs during the execution, return a JSON response indicating an Internal Server Error (status code 500)
-        return jsonify({"error_ teto": str(err)}), 500 # "Internal Server Error" , "status_code": 500
+        return jsonify({"answer": "Gracias por rellenar el formulario. Parece que estamos teniendo problemas técnicos. Vuelva a intentarlo más tarde, por favor."}), 500 # "Internal Server Error" , "status_code": 500
 
 
     
