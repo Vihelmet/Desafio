@@ -10,7 +10,7 @@ load_dotenv()
 
 app = Flask(__name__)
 
-@app.route('/chatgpt', methods=['GET'])
+@app.route('/chatgpt', methods=['GET', 'POST'])
 def chatgpt():
     """
     Function to handle the chatbot API endpoint for receiving user questions and providing responses.
